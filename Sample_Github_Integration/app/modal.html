@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://static.freshdev.io/fdk/2.0/assets/fresh_client.js"></script>
+    <script src="modal.js"> 
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="modal.css">
+    <link rel="stylesheet" type="text/css" href="https://static.freshdev.io/fdk/2.0/assets/freshdesk.css">
+
+  </head>
+  <body>
+    <div class="container">
+        <form action="">
+            <h3>Customer Details</h3>
+            <label for = "custName">Requester Name</label>
+            <input type = "text" id="requester" name="requester" required>
+      
+             <h3>Issue Details</h3>
+
+            <label for="ticketSubject">Title</label>
+            <input type="text" id="ticketSubject" name="ticketSubject" placeholder="Enter Title for Issue.."required>
+
+            <label for="ticketDesc">Body</label>
+            <textarea id="ticketDesc" name="ticketDesc" style="height:250px" placeholder="Enter Description for Issue.." required></textarea>
+
+            <label for="ticketStatus">Status</label>
+            <input type = "text" id="ticketStatus" name="ticketStatus" placeholder="Specify Open/Closed for Issue Status" required>
+
+            <span    id="raiseAsIssue" class="btn btn-primary" > Raise As Issue </span>
+            <span     id="closeModal" class="btn btn-default cancel">Cancel</span> 
+    
+          </form>
+    </div>
+  </body>
+</html>
+
+

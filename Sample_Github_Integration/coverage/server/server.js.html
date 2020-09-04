@@ -1,0 +1,1958 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for server/server.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">server/</a> server.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">79.6% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>199/250</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">70% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>28/40</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">70% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>35/50</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">79.6% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>199/250</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632</td><td class="line-coverage quiet"><span class="cline-any cline-yes">63×</span>
+<span class="cline-any cline-yes">63×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">63×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-yes">31×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const repo = 'github-test-integration';
+const owner = 'Akshara-K';
+&nbsp;
+exports = {
+&nbsp;
+  events: [
+    { event: "onAppInstall", callback: "onAppInstallHandler" },
+    { event: "onTicketUpdate", callback: "updateIssueFromTicket" },
+    { event: "onConversationCreate", callback: "createCommentHandler" },
+    { event: "onExternalEvent", callback: "onExternalEventHandler" },
+    { event: "onAppUninstall", callback: "onAppUninstallHandler" }
+  ],
+  onAppInstallHandler: function () <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >    generateTargetUrl()</span>
+      .then(function (targetUrl) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >        console.log(targetUrl);</span>
+<span class="cstat-no" title="statement not covered" >        $db.set("webHookUrl", {</span>
+          url: targetUrl
+        });
+<span class="cstat-no" title="statement not covered" >        renderData(null, "Webhook Registration Successful"); </span>// message obj 
+      })
+      .fail(function (err) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >        renderData({</span>
+          message: err
+        });
+      });
+  },
+  createIssue: function (payload) {
+&nbsp;
+    //github api call to create new issue: POST /repos/Akshara-K/github-test-integration/issues?body=
+    //the issue_number should be logged to appstore with created ticket's ticket_id ( payload["data"]["ticket"]["ticket_id"] )
+&nbsp;
+    console.info("-----------------------------------------");
+    console.info("Inside createIssue");
+&nbsp;
+    let ticket_id = payload.data.ticket.id;
+    let title = payload.data.ticket.subject;
+    //let body = "Pushed from Freshdesk! [Issue created for Ticket]" + payload.data.ticket.description_text;
+    let body = payload.data.ticket.description_text;
+    let options = getAuthGithub();
+    let url = `${payload.iparams['githubUrl']}/repos/${owner}/${repo}/issues`;
+&nbsp;
+&nbsp;
+    options['body'] = JSON.stringify({ 'title': title, 'body': body });
+    //console.info(options);
+    $request.post(url, options)
+      .then(
+        function (data) {
+&nbsp;
+          data = JSON.parse(data.response);
+          console.info(data, 'Issue created');
+          let issue_number = data.number;
+          storeInAppDB(ticket_id, issue_number);
+          console.log("Stored in DB");
+          renderData(null, data);
+          addSourceComment("[Issue created for Ticket]", issue_number);
+          
+&nbsp;
+        },
+        function (err) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >          console.error(err, 'Error occurred in create operation');</span>
+<span class="cstat-no" title="statement not covered" >          renderData(err);</span>
+        }
+      );
+&nbsp;
+  },
+&nbsp;
+  getIssue: function (payload) {
+    console.info("-----------------------------------------");
+    console.info("Inside getIssue");
+&nbsp;
+&nbsp;
+    let issue_number = payload.data.issue_number;
+&nbsp;
+    let url = `&lt;%= iparam.githubUrl %&gt;/repos/${owner}/${repo}/issues/${issue_number}`;
+&nbsp;
+    let options = getAuthGithub();
+&nbsp;
+&nbsp;
+    $request.get(url, options)
+      .then(
+        function (data) {
+&nbsp;
+          data = JSON.parse(data.response);
+          console.info(data, 'Issue fetched correctly');
+          renderData(null, data);
+&nbsp;
+        },
+        function (err) {
+          console.error(err, 'Error occurred in issue fetch operation');
+          renderData(err);
+        }
+      );
+&nbsp;
+  },
+&nbsp;
+  updateIssueFromTicket: async function (payload) <span class="fstat-no" title="function not covered" >{</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    console.info("-----------------------------------------");</span>
+<span class="cstat-no" title="statement not covered" >    console.info('Inside Update issue Handler');</span>
+&nbsp;
+    let ticket_id = <span class="cstat-no" title="statement not covered" >payload["data"]["ticket"]["id"];</span>
+&nbsp;
+    let data = <span class="cstat-no" title="statement not covered" >await getIssueNumber(ticket_id)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (data) {</span>
+      let issue_number = <span class="cstat-no" title="statement not covered" >data['issue_number'];</span>
+<span class="cstat-no" title="statement not covered" >      updateIssue(payload, issue_number);</span>
+&nbsp;
+    }
+    else {
+<span class="cstat-no" title="statement not covered" >      console.log("no ticket found ");</span>
+    }
+&nbsp;
+  },
+&nbsp;
+  createCommentHandler: async function (payload) {
+&nbsp;
+    console.info("-----------------------------------------");
+    console.info("Inside createComment Handler() ");
+&nbsp;
+    let ticket_id = payload.data.conversation.ticket_id;
+    let note_id = payload.data.conversation.id;
+&nbsp;
+    let data = await getIssueNumber(ticket_id)
+    console.log(data);
+&nbsp;
+    let recentNote = payload.data.conversation["body_text"];
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (recentNote.substring(0, 19) !== 'Pushed from Github!') {
+      performCreateCommentHandling(data, payload, note_id);
+    }
+&nbsp;
+&nbsp;
+  },
+&nbsp;
+&nbsp;
+  onAppUninstallHandler: function () <span class="fstat-no" title="function not covered" >{</span>
+    //Include API call to the third party to deregister your webhook
+<span class="cstat-no" title="statement not covered" >    console.info("-----------------------------------------");</span>
+<span class="cstat-no" title="statement not covered" >    $db.delete("webHookUrl").then(</span>
+      function (data) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >        console.log(data);</span>
+<span class="cstat-no" title="statement not covered" >        renderData();</span>
+<span class="cstat-no" title="statement not covered" >        console.info("Webhook Deregistration Successful");</span>
+      },
+      function (error) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >        console.log(error)</span>
+        // failure operation
+<span class="cstat-no" title="statement not covered" >        renderData({ message: "Uninstallation failed due to network error." });</span>
+      });
+&nbsp;
+  },
+&nbsp;
+  onExternalEventHandler: async function (payload) {
+    console.info("-----------------------------------------");
+    console.info(`Inside External event Handler`);
+&nbsp;
+&nbsp;
+    //console.log(payload.data.comment.user);
+    let recentComment = ""
+&nbsp;
+    let issue_number = payload.data.issue.number;
+    if ('comment' in payload.data)
+      recentComment = payload.data.comment.body;
+    else
+      recentComment = payload.data.issue.body;
+&nbsp;
+    console.log(recentComment);
+    if (recentComment.substring(0, 22) !== 'Pushed from Freshdesk!') {
+      let data = await getTicketId(issue_number)
+      //data.note_id has note_id
+      
+      performExtEventHandling(data, payload, issue_number);
+&nbsp;
+    }
+    else {
+      console.log("Ext Event Handler Loop prevented");
+    }
+&nbsp;
+  }
+&nbsp;
+&nbsp;
+};
+&nbsp;
+function addSourceComment(op, issue_number) {
+  let commentText = "Pushed from Freshdesk! " + op;
+  let body = { "body": commentText };
+  let url = `&lt;%= iparam.githubUrl %&gt;/repos/${owner}/${repo}/issues/${issue_number}/comments`;
+&nbsp;
+  let options = getAuthGithub();
+  options['body'] = JSON.stringify(body);
+&nbsp;
+  return $request.post(url, options)
+    .then(
+      function () {
+        console.log("Source Comment added for ", op);
+      }
+    ), function (err) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >      console.error(err);</span>
+    }
+}
+&nbsp;
+function addSourceNote(op, ticket_id) {
+  console.log("--------------------")
+  console.log("inside Source Note ffunction");
+  let noteText = "Pushed from Github! " + op;
+  let body = {
+    "body": noteText,
+    "private": true
+  }
+  let url = `https://&lt;%=iparam.freshdeskDomain%&gt;.freshdesk.com/api/v2/tickets/${ticket_id}/notes`;
+  let options = getAuthFW();
+&nbsp;
+  options['body'] = JSON.stringify(body);
+  //console.log("body of source note", options);
+  $request.post(url, options)
+    .then(
+      function () {
+        console.info('Source Note Added');
+&nbsp;
+      }, function (err) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >        console.error(err);</span>
+      });
+&nbsp;
+&nbsp;
+&nbsp;
+}
+&nbsp;
+function performCreateCommentHandling(data, payload, note_id) {
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (data) {
+&nbsp;
+    console.log("inside performCreateCommentHAndling");
+&nbsp;
+    let issue_number = data.issue_number;
+&nbsp;
+&nbsp;
+    createComment(payload, issue_number)
+    .then(
+      function (APIResponse) {
+        console.log("HI");
+        APIResponse = JSON.parse(APIResponse.response);
+        let comment_number = APIResponse["id"];
+        console.log(comment_number);
+        console.info("ConversationCreateHandler(create) Successful");
+        storeCommentInAppDB(note_id, comment_number);
+      },
+      function (error) {
+        console.error(error);
+      }
+    );
+&nbsp;
+  } else {
+<span class="cstat-no" title="statement not covered" >    console.error("data is null");</span>
+  }
+}
+function performExtEventHandling(data, payload) {
+&nbsp;
+  console.log("---------------");
+  console.log("inside performExtEventHandling");
+  if (data) {
+    console.log("inside if(data)");
+    let action = payload.data.action;
+    let ticket_id = data['ticket_id'];
+&nbsp;
+    checkIssueUpdate(payload, action, ticket_id);
+    checkCommentUpdate(payload, action, ticket_id);
+  }
+  else {
+    console.error("data is null");
+  }
+&nbsp;
+}
+&nbsp;
+function checkIssueUpdate(payload, action, ticket_id) {
+&nbsp;
+  if (action === "closed" || action === "reopened") {
+    console.log("inside checkISsueUpdate");
+    updateTicket(payload, ticket_id);
+  }
+  //console.log("leaving checkIssueUpdate");
+}
+function checkCommentUpdate(payload, action, ticket_id) {
+  console.log("inside checkComment");
+  //console.log("payload is==========  ", payload);
+  if ((action === "edited") &amp;&amp; ('comment' in payload.data)) {
+&nbsp;
+    updateNote(payload)
+    .then(
+      function (data) {
+        data = JSON.parse(data.response);
+        console.info(data, 'External Event Handled (updating note) successfully!');
+&nbsp;
+      }, function (err) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >        console.error(err, 'Error occurred in External Event Handling (updating note)');</span>
+      }
+    );
+  }
+&nbsp;
+  if ((action === "created") &amp;&amp; ('comment' in payload.data)) {
+    createNote(payload, ticket_id);
+  }
+  //console.log("leaving checkCommentUpdate");
+}
+async function getIssueNumber(ticket_id) {
+  console.log("-------------------------------------------");
+  console.info("inside getIssueNumber");
+&nbsp;
+  try {
+    let data = await $db.get(`ticket${ticket_id}`)
+    return data;
+  }
+  catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error(error.message);</span>
+<span class="cstat-no" title="statement not covered" >    return null;</span>
+  }
+&nbsp;
+}
+&nbsp;
+async function getTicketId(issue_number) {
+  console.info("-----------------------------------------");
+  console.info(`Inside getTicketId`);
+&nbsp;
+&nbsp;
+  try {
+    let data = await $db.get(`issue${issue_number}`)
+    return data;
+  }
+  catch (error) {
+    console.error(error.message);
+    return null;
+  }
+}
+&nbsp;
+function createNote(payload, ticket_id) {
+&nbsp;
+  console.log("----------------------------")
+  console.log("inside createNote");
+&nbsp;
+  let noteText = "Pushed from Github! : " + payload.data.comment.body;
+&nbsp;
+&nbsp;
+  console.log(noteText);
+&nbsp;
+&nbsp;
+&nbsp;
+  let comment_number = payload.data.comment.id;
+&nbsp;
+  let body = {
+    "body": noteText,
+    "private": false
+  };
+&nbsp;
+  console.log("body is", body);
+&nbsp;
+  let url = `https://&lt;%=iparam.freshdeskDomain%&gt;.freshdesk.com/api/v2/tickets/${ticket_id}/notes`;
+  let options = getAuthFW();
+&nbsp;
+  options['body'] = JSON.stringify(body);
+&nbsp;
+  console.log("options is ", options);
+  console.log(url);
+&nbsp;
+  $request.post(url, options)
+    .then(
+      function (data) {
+        console.info(data, 'External Event Handled (creating note) successfully!');
+        data = JSON.parse(data.response);
+        let note_id = data.id;
+        storeCommentInAppDB(note_id, comment_number);
+&nbsp;
+      }, function (err) {
+        console.error(err, 'Error occurred in External Event Handling (creating note)');
+      });
+&nbsp;
+&nbsp;
+}
+&nbsp;
+&nbsp;
+async function getNoteId(comment_number) {
+  console.log("----------------------------")
+  console.log("inside getNoteId");
+&nbsp;
+  try {
+    let data = await $db.get(`comment${comment_number}`)
+    return data;
+  }
+  catch (error) {
+<span class="cstat-no" title="statement not covered" >    console.error(error.message);</span>
+<span class="cstat-no" title="statement not covered" >    return null;</span>
+  }
+&nbsp;
+}
+&nbsp;
+async function updateNote(payload) {
+  console.info("-----------------------------------------");
+  console.info(`Inside updateNote`);
+  console.log(payload);
+  let comment_number = payload.data.comment.id;
+&nbsp;
+&nbsp;
+  let data = await getNoteId(comment_number);
+&nbsp;
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (data) {
+    let note_id = data['note_id'];
+    let noteText = "Pushed from Github! [Updated] : " + payload.data.comment.body;
+    console.log(noteText);
+&nbsp;
+    let body = {
+      "body": noteText
+    };
+&nbsp;
+    console.log("body is ", body);
+&nbsp;
+    let url = `https://&lt;%=iparam.freshdeskDomain%&gt;.freshdesk.com/api/v2/conversations/${note_id}`;
+    let options = getAuthFW();
+&nbsp;
+    options['body'] = JSON.stringify(body);
+&nbsp;
+    console.log("options is ", options);
+    console.log(url);
+&nbsp;
+    return $request.put(url, options);
+      
+&nbsp;
+  }
+  else {
+<span class="cstat-no" title="statement not covered" >    console.log("no comment found to update ");</span>
+<span class="cstat-no" title="statement not covered" >    return null;</span>
+  }
+&nbsp;
+&nbsp;
+&nbsp;
+}
+&nbsp;
+&nbsp;
+function updateTicket(payload, ticket_id) {
+&nbsp;
+  console.info("-----------------------------------------");
+  console.info(`Inside updateTicket`);
+  
+  let newBody = {
+    "newStatus": payload.data.issue.state
+  };
+&nbsp;
+  let url = `https://&lt;%=iparam.freshdeskDomain%&gt;.freshdesk.com/api/v2/tickets/${ticket_id}`;
+  let options = getAuthFW();
+&nbsp;
+  let body = { "status": getTicketState(newBody.newStatus) };
+&nbsp;
+  console.log("url", url);
+&nbsp;
+  options['body'] = JSON.stringify(body);
+  //console.log(options);
+&nbsp;
+  $request.put(url, options)
+    .then(
+      function (data) {
+        console.info(data, 'External Event Handled successfully! (TicketUpdate) ');
+        addSourceNote("[Ticket Updated for Issue]", ticket_id);
+      }, function (err) {
+        console.error(err, 'Error occurred in External Event Handling');
+      });
+}
+&nbsp;
+&nbsp;
+function createComment(payload, issue_number) {
+  //Create an issue comment
+  // /repos/{owner}/{repo}/issues/{issue_number}/comments
+  // accept -	string	- header	- Setting to application/vnd.github.v3+json is recommended
+  console.info("--------------------------------")
+  console.info("Inside createComment() ")
+&nbsp;
+  let commentType = "";
+  let commentText = payload['data']['conversation']['body_text'];
+&nbsp;
+  let arg = {
+    "commentText": commentText,
+    "CommentType": commentType
+  }
+  prepareComment(payload, arg);
+&nbsp;
+  console.info("--------------------------------")
+&nbsp;
+  //https validation needed
+  let url = `&lt;%= iparam.githubUrl %&gt;/repos/${owner}/${repo}/issues/${issue_number}/comments`;
+&nbsp;
+  let options = getAuthGithub();
+  options['body'] = JSON.stringify({ "body": arg.commentText });
+&nbsp;
+&nbsp;
+  return $request.post(url, options);
+&nbsp;
+}
+&nbsp;
+function prepareComment(payload, arg) {
+&nbsp;
+  console.info("--------------------------------")
+  console.info("Inside prepareComment() ")
+  let noteSource = payload.data.conversation['source'];
+  let isPrivate = payload.data.conversation['private'];
+&nbsp;
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (noteSource === 0) {
+    arg.commentType = `[Reply]: `;
+&nbsp;
+  }
+&nbsp;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (noteSource === 2) {
+<span class="cstat-no" title="statement not covered" >    if (isPrivate) {</span>
+<span class="cstat-no" title="statement not covered" >      arg.commentType = `[Private Note] : `;</span>
+    }
+    else {
+<span class="cstat-no" title="statement not covered" >      arg.commentType = `[Public Note added] : `;</span>
+&nbsp;
+    }
+  }
+&nbsp;
+  arg.commentText = "Pushed from Freshdesk!" + arg.commentType + arg.commentText;
+&nbsp;
+  let ifTruncated = payload['data']['conversation']['is_body_text_truncated'];
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (ifTruncated) {
+<span class="cstat-no" title="statement not covered" >    arg.commentText = arg.commentText + " (NOTE: This text is truncated, please check source).";</span>
+  }
+}
+&nbsp;
+function storeCommentInAppDB(note_id, comment_number) {
+&nbsp;
+  console.log("inside storeCommentInAppDB");
+  let note = `note${note_id}`;
+  let comment = `comment${comment_number}`;
+&nbsp;
+  $db.set(note, {
+    'comment_number': comment_number
+  });
+&nbsp;
+  $db.set(comment, {
+    'note_id': note_id
+  });
+}
+&nbsp;
+function updateIssue(payload, issue_number) <span class="fstat-no" title="function not covered" >{</span>
+&nbsp;
+&nbsp;
+  //let body = "Pushed from Freshdesk! [Issue updated from Ticket]"
+&nbsp;
+  let status = <span class="cstat-no" title="statement not covered" >payload.data.ticket.status;</span>
+&nbsp;
+  let state = <span class="cstat-no" title="statement not covered" >getIssueState(status);</span>
+&nbsp;
+  //github api call to update issue: issue_number
+  //let changes = payload.data.ticket.changes;
+  //console.info(JSON.stringify(changes), ": payload Data");
+&nbsp;
+  let url = <span class="cstat-no" title="statement not covered" >`${payload.iparams['githubUrl']}/repos/${owner}/${repo}/issues/${issue_number}`;</span>
+&nbsp;
+  let options = <span class="cstat-no" title="statement not covered" >getAuthGithub();</span>
+<span class="cstat-no" title="statement not covered" >  options['body'] = JSON.stringify({ "state": state });</span>
+<span class="cstat-no" title="statement not covered" >  console.log(url);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  $request.post(url, options).then(function (data) <span class="fstat-no" title="function not covered" >{</span></span>
+<span class="cstat-no" title="statement not covered" >    console.info(data, 'updateIssueHandler successfull! Issue updated is: ', issue_number);</span>
+<span class="cstat-no" title="statement not covered" >    addSourceComment("[Issue Updated from Ticket]", issue_number);</span>
+  }, function (err) <span class="fstat-no" title="function not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >    console.error(err, 'Error occurred in updateIssueHandler ');</span>
+  });
+&nbsp;
+}
+&nbsp;
+function getIssueState(status) <span class="fstat-no" title="function not covered" >{</span>
+  let state = <span class="cstat-no" title="statement not covered" >"";</span>
+<span class="cstat-no" title="statement not covered" >  if (status === 5) {</span>
+<span class="cstat-no" title="statement not covered" >    state = "closed";</span>
+  } else {
+<span class="cstat-no" title="statement not covered" >    state = "open";</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return state;</span>
+}
+&nbsp;
+function getTicketState(state) {
+  let status = 0;
+&nbsp;
+  if (state === "open") {
+    status = 2;
+  }
+  if (state === "closed") {
+    status = 4;
+  }
+&nbsp;
+  return status;
+}
+&nbsp;
+&nbsp;
+&nbsp;
+function storeInAppDB(ticket_id, issue_number) {
+&nbsp;
+  let ticket = `ticket${ticket_id}`;
+  let issue = `issue${issue_number}`;
+&nbsp;
+  $db.set(ticket, {
+    'issue_number': issue_number
+  });
+&nbsp;
+  $db.set(issue, {
+    'ticket_id': ticket_id
+  });
+&nbsp;
+}
+&nbsp;
+function getAuthFW() {
+  return {
+    headers: {
+      "Authorization": `Basic &lt;%= encode(iparam.freshdeskApiKey) %&gt;`,
+      "Content-Type": "application/json"
+    }
+  }
+}
+&nbsp;
+&nbsp;
+function getAuthGithub() {
+  return {
+    headers: {
+      "Authorization": "token 397ccd359937ab790bd18a98648d76875a1e10d3",
+      isOAuth: true,
+      "Content-Type": "application/json",
+      "Accept": "application/vnd.github.v3+json",
+      "User-Agent": "Akshara-K"
+    }
+  }
+}
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Sep 04 2020 11:27:19 GMT+0530 (India Standard Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

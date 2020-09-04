@@ -1,0 +1,28 @@
+{
+  "account_id": "13",
+  "event": "onExternalEvent",
+  "timestamp": 1496400354326,
+  "region": "US",
+  "domain": "https://freshworksdesk855.freshdesk.com",
+  "data": {
+    "action": "edited",
+    "issue": {
+      "url": "https://api.github.com/repos/Akshara-K/github-test-integration/issues/6",
+      "repository_url": "https://api.github.com/repos/Akshara-K/github-test-integration",
+      "labels_url": "https://api.github.com/repos/Akshara-K/github-test-integration/issues/6/labels{/name}",
+      "comments_url": "https://api.github.com/repos/Akshara-K/github-test-integration/issues/6/comments",
+      "events_url": "https://api.github.com/repos/Akshara-K/github-test-integration/issues/5/events",
+      "html_url": "https://github.com/Akshara-K/github-test-integration/issues/6",
+      "id": 686937692,
+      "node_id": "MDU6SXNzdWU2ODY5Mzc2OTI=",
+      "number": 25,
+      "title": "New Product Feature",
+      "state": "open",
+      "locked": "false"
+    },
+    "changes": {}
+  },
+  "headers": {
+    "Content-Type": "application/json"
+  }
+}

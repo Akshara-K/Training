@@ -1,0 +1,46 @@
+{ 
+  "githubUrl": {
+    "display_name": "Github URL",
+    "description": "Please enter your Github URL - Example: https://yourdomain.github.com",
+    "type": "url",
+    "required": true
+  },
+  "githubUsername": {
+    "display_name": "Github Username",
+    "description": "Please enter your Github Username",
+    "type": "text",
+    "required": true,
+    "secure": true
+  },
+  "githubAccessToken": {
+    "display_name": "Github Access Key",
+    "description": "Please enter your Github Key",
+    "type": "api_key",
+    "required": true,
+    "type_attributes": {
+      "product": "freshdesk"
+    },
+    "secure": true
+  },
+  "freshdeskDomain": {
+    "display_name": "Freshdesk domain",
+    "description": "Please enter your Freshworks Domain Name: yourdomain ",
+   
+    "type": "domain",
+    "type_attributes": {
+      "product": "freshdesk"
+    },
+    "required": true
+  },
+  "freshdeskApiKey": {
+    "display_name": "Freshdesk API Key",
+    "description": "Please enter freshdesk api key",
+    "type": "api_key",
+    "required": true,
+    "type_attributes": {
+      "product": "freshdesk"
+    },
+    "secure": true
+  }
+
+}
