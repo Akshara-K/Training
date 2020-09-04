@@ -595,8 +595,7 @@ function getAuthFW() {
 function getAuthGithub() {
   return {
     headers: {
-      "Authorization": "token 397ccd359937ab790bd18a98648d76875a1e10d3",
-      isOAuth: true,
+      "Authorization": `token <%= encode(iparam.githubApiKey) %>`, 
       "Content-Type": "application/json",
       "Accept": "application/vnd.github.v3+json",
       "User-Agent": "Akshara-K"
